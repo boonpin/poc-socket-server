@@ -1,0 +1,5 @@
+## Socket Server Demo with reach/socket
+
+    1. composer install
+    2. php run.php
+    3. telnet 127.0.0.1 1234

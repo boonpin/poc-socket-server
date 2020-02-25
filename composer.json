@@ -1,0 +1,14 @@
+{
+  "name": "sdxlab/socket-server",
+  "description": "Socket Server",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Kelvin",
+      "email": "kelvin.wong@sdxlab.com"
+    }
+  ],
+  "require": {
+    "react/socket": "^1.3"
+  }
+}
