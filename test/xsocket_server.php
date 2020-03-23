@@ -67,5 +67,5 @@ $socket->on('connection', function (React\Socket\ConnectionInterface $client) us
         }
     });
 });
-echo "starting socket on $host";
+echo "starting socket on $host\n";
 $loop->run();
