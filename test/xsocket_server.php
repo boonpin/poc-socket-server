@@ -11,11 +11,13 @@ $logger = function ($message) {
     echo sprintf("[%s]: %s\n", date('Y-m-d H:i:s'), $message);
 };
 
-$socket->on('connection', function (React\Socket\ConnectionInterface $client) use ($logger) {
+$storage = dirname(__FILE__) . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "storage";
+
+$socket->on('connection', function (React\Socket\ConnectionInterface $client) use ($storage, $logger) {
     $client->write("Welcome");
     call_user_func($logger, sprintf("received connection from [%s]", $client->getRemoteAddress()));
 
-    $client->on('data', function ($data) use ($client, $logger) {
+    $client->on('data', function ($data) use ($client, $logger, $storage) {
         // remove any non-word characters (just for the demo)
         //$data = trim(preg_replace('/[^\w\d \.\,\-\!\?]/u', '', $data));
         $data = trim($data);
@@ -48,22 +50,22 @@ $socket->on('connection', function (React\Socket\ConnectionInterface $client) us
             $client->write('<RESULT STCODE="0"><TRACKID ID="' . $tid . '"></TRACKID></RESULT>');
         } else if ($comCode === "AL_GET") {
             call_user_func($logger, "[$reqTid] sending back get get door access level");
-            $client->write(file_get_contents('./storage/data/door_access_level.xml'));
+            $client->write(file_get_contents("$storage/data/door_access_level.xml"));
         } else if ($comCode === "LAL_GET") {
             call_user_func($logger, "[$reqTid] sending back get get door access level");
-            $client->write(file_get_contents('./storage/data/lift_door_access_level.xml'));
+            $client->write(file_get_contents("$storage/data/lift_door_access_level.xml"));
         } else if ($comCode === "AG_GET") {
             call_user_func($logger, "[$reqTid] sending back get get access groups");
-            $client->write(file_get_contents('./storage/data/access_groups.xml'));
+            $client->write(file_get_contents("$storage/storage/data/access_groups.xml"));
         } else if (in_array($comCode, ["STAFF_ADD1", "STAFF_MOD", "STAFF_DEL", "CARD_ADD", "CARD_MOD", "CARD_DEL", "CARD_ACT", "CARD_DCT"])) {
             call_user_func($logger, "[$reqTid] sending back [$comCode] response");
-            $client->write(file_get_contents('./storage/data/action_response.xml'));
+            $client->write(file_get_contents("$storage/storage/data/action_response.xml"));
         } else {
             call_user_func($logger, $data);
             call_user_func($logger, "[$reqTid] sending error response");
-            $client->write(file_get_contents('./storage/data/error_response.xml'));
+            $client->write(file_get_contents("$storage/storage/data/error_response.xml"));
         }
     });
 });
-
+echo "starting socket on $host";
 $loop->run();
