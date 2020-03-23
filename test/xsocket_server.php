@@ -8,7 +8,7 @@ $loop = React\EventLoop\Factory::create();
 $socket = new React\Socket\Server($host, $loop);
 
 $logger = function ($message) {
-    echo sprintf("[%s]: %s", date('Y-m-d H:i:s'), $message);
+    echo sprintf("[%s]: %s\n", date('Y-m-d H:i:s'), $message);
 };
 
 $socket->on('connection', function (React\Socket\ConnectionInterface $client) use ($logger) {
