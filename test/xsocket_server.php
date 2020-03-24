@@ -59,7 +59,7 @@ $socket->on('connection', function (React\Socket\ConnectionInterface $client) us
             $client->write(file_get_contents("$storage/data/access_groups.xml"));
         } else if (in_array($comCode, ["STAFF_ADD", "STAFF_MOD", "STAFF_DEL", "CARD_ADD", "CARD_MOD", "CARD_DEL", "CARD_ACT", "CARD_DCT"])) {
             call_user_func($logger, "[$reqTid] sending back [$comCode] response");
-            $client->write(file_get_contents("$storage/storage/data/action_response.xml"));
+            $client->write(file_get_contents("$storage/data/action_response.xml"));
         } else {
             call_user_func($logger, $data);
             call_user_func($logger, "[$reqTid] sending error response");
