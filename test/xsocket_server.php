@@ -56,14 +56,14 @@ $socket->on('connection', function (React\Socket\ConnectionInterface $client) us
             $client->write(file_get_contents("$storage/data/lift_door_access_level.xml"));
         } else if ($comCode === "AG_GET") {
             call_user_func($logger, "[$reqTid] sending back get get access groups");
-            $client->write(file_get_contents("$storage/storage/data/access_groups.xml"));
-        } else if (in_array($comCode, ["STAFF_ADD1", "STAFF_MOD", "STAFF_DEL", "CARD_ADD", "CARD_MOD", "CARD_DEL", "CARD_ACT", "CARD_DCT"])) {
+            $client->write(file_get_contents("$storage/data/access_groups.xml"));
+        } else if (in_array($comCode, ["STAFF_ADD", "STAFF_MOD", "STAFF_DEL", "CARD_ADD", "CARD_MOD", "CARD_DEL", "CARD_ACT", "CARD_DCT"])) {
             call_user_func($logger, "[$reqTid] sending back [$comCode] response");
             $client->write(file_get_contents("$storage/storage/data/action_response.xml"));
         } else {
             call_user_func($logger, $data);
             call_user_func($logger, "[$reqTid] sending error response");
-            $client->write(file_get_contents("$storage/storage/data/error_response.xml"));
+            $client->write(file_get_contents("$storage/data/error_response.xml"));
         }
     });
 });
